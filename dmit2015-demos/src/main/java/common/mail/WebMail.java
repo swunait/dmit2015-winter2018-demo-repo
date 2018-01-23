@@ -61,67 +61,52 @@ public class WebMail {
 			}
 		}
 	}
-
-	public static void main(String[] args) {
+	
+	public static void receivemail() {
 		// Steps to read a remote mailbox (some steps are optional)
-		// 1) Set up the properties you'll use for the connection
-		Properties props = new Properties();
-		props.setProperty("mail.pop3.host", "pop.gmail.com");
-		props.setProperty("mail.pop3.port", "995");
-		props.setProperty("mail.pop3.ssl.trust", "pop.gmail.com");
-		props.setProperty("mail.pop3.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-		props.setProperty("mail.pop3.socketFactory.fallback", "false");
-		props.setProperty("mail.pop3.socketFactory.port", "995");
-		// 2) Construct the "Authenticator" you'll use for authentication
-		// 3) Get a "Session" object with "Session.getInstance()"
-		try {
-			URLName url = new URLName("pop3", "pop.gmail.com", 995, "", "myUserName", "myPassword");
-			Session currentSession = Session.getInstance(props, null);
-			// 4) Use the session's "getStore()" method to return a "Store"
-			Store currentStore = new POP3SSLStore(currentSession, url);
-			// 5) Connect to the store
-			currentStore.connect();
-			// 6) Get the INBOX folder from the store with the "getFolder()" method
-			Folder inbox = currentStore.getFolder("INBOX");
-			// 7) Open the INBOX folder
-			inbox.open(Folder.READ_ONLY);
-			// 8) Open the folder you want inside the INBOX folder
-			// 9) Get the messages from the folder as an array of "Message" object
-			Message[] messages = inbox.getMessages();
-			// 10) Iterate through the array of messages
-			for( int index = 0; index < 5 && index < messages.length; index++ ) {
-				System.out.println("--- Message " + (index + 1) + " ---");
-				Message singleMessage = messages[index];
-				singleMessage.writeTo(System.out);
-			}
-			// 11) Close the connection but DON'T remove the messages from the server
-			inbox.close(false);
-			// 12) Close the store
-			currentStore.close();			
-		} catch(MessagingException | IOException e) {
-			e.printStackTrace();
-			System.out.println("Receive mail was not successful");
-		}
+				// 1) Set up the properties you'll use for the connection
+				Properties props = new Properties();
+				props.setProperty("mail.pop3.host", "pop.gmail.com");
+				props.setProperty("mail.pop3.port", "995");
+				props.setProperty("mail.pop3.ssl.trust", "pop.gmail.com");
+				props.setProperty("mail.pop3.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+				props.setProperty("mail.pop3.socketFactory.fallback", "false");
+				props.setProperty("mail.pop3.socketFactory.port", "995");
+				// 2) Construct the "Authenticator" you'll use for authentication
+				// 3) Get a "Session" object with "Session.getInstance()"
+				try {
+					URLName url = new URLName("pop3", "pop.gmail.com", 995, "", "myUserName", "myPassword");
+					Session currentSession = Session.getInstance(props, null);
+					// 4) Use the session's "getStore()" method to return a "Store"
+					Store currentStore = new POP3SSLStore(currentSession, url);
+					// 5) Connect to the store
+					currentStore.connect();
+					// 6) Get the INBOX folder from the store with the "getFolder()" method
+					Folder inbox = currentStore.getFolder("INBOX");
+					// 7) Open the INBOX folder
+					inbox.open(Folder.READ_ONLY);
+					// 8) Open the folder you want inside the INBOX folder
+					// 9) Get the messages from the folder as an array of "Message" object
+					Message[] messages = inbox.getMessages();
+					// 10) Iterate through the array of messages
+					for( int index = 0; index < 5 && index < messages.length; index++ ) {
+						System.out.println("--- Message " + (index + 1) + " ---");
+						Message singleMessage = messages[index];
+						singleMessage.writeTo(System.out);
+					}
+					// 11) Close the connection but DON'T remove the messages from the server
+					inbox.close(false);
+					// 12) Close the store
+					currentStore.close();			
+				} catch(MessagingException | IOException e) {
+					e.printStackTrace();
+					System.out.println("Receive mail was not successful");
+				}
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public static void main(String[] args) {
+//		sendmail();
+//		receivemail();
+	}
+
 }
