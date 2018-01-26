@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" 
+	xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"     
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:p="http://primefaces.org/ui"  
+	xmlns:hf="http://highfaces.org" 
+>
+      
+    <h:head>
+        <!-- Required meta tags -->
+    	<meta charset="utf-8" />
+    	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    	<!-- Bootstrap CSS -->
+    	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+    		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+		
+		<title>Hello JSF with AJAX</title>		
+    </h:head>
+    <h:body>        
+        
+       <div class="jumbotron jumbotron-fluid">
+        	<h1 class="display-4">Hello World - JSF with AJAX Version</h1>
+        </div>
+        
+        <h:form >
+            <h:messages id="messages" />
+            
+            <div class="form-group">
+                <h:outputLabel for="username" value="Your Name">
+                </h:outputLabel>
+                <h:inputText id="username"
+                             label="Your Name"
+                             value="#{currentHelloController.username}"                             
+                             required="true"
+                             requiredMessage="Name field value is required"
+                             styleClass="form-control"
+                             pt:placeholder="enter your name here">
+                    <f:validateLength minimum="2" maximum="30">
+                    </f:validateLength>                    
+                </h:inputText>            
+            </div>
+            
+             <h:commandButton value="Submit" 
+            	actionListener="#{currentHelloController.sayHello}"
+            	styleClass="btn btn-primary">
+            	<f:ajax execute="username" render="messages"/>
+            </h:commandButton>
+        </h:form>
+        
+        
+        <!-- Optional JavaScript -->
+    	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    </h:body>
+</html>
