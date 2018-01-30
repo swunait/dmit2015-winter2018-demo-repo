@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" 
+	xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"     
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:b="http://bootsfaces.net/ui"
+>     
+    <h:head>
+        <!-- Required meta tags -->
+    	<meta charset="utf-8" />
+    	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+		<title>Rectangle Calculator</title>		
+    </h:head>
+    <h:body>        
+       
+       <b:jumbotron> 
+       		<h1>Rectangle Calculator</h1>
+       </b:jumbotron>
+       
+        <h:form >
+            <b:messages id="messages" />
+            
+            <b:inputText id="length"
+                         label="Length"
+                         value="#{currentRectangleController.currentRectangle.length}"                             
+                         >
+                <b:focus />              
+            </b:inputText>            
+
+            <b:inputText id="width"
+                         label="Width"
+                         value="#{currentRectangleController.currentRectangle.width}"                             
+                         >
+            </b:inputText>            
+            
+            <b:commandButton value="Get Area" look="primary"
+           		actionListener="#{currentRectangleController.calculateArea}"
+           		update="messages">
+           </b:commandButton>
+           
+             <b:commandButton value="Get Perimeter" look="primary"
+           		actionListener="#{currentRectangleController.calculatePerimeter}"
+           		update="messages">
+           </b:commandButton>
+           
+             <b:commandButton value="Get Diagonal" look="primary"
+           		actionListener="#{currentRectangleController.calculateDiagonal}"
+           		update="messages">
+           </b:commandButton>
+           
+        </h:form>
+        
+    </h:body>
+</html>
