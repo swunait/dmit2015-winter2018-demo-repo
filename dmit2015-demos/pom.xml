@@ -226,7 +226,6 @@
 			<artifactId>components</artifactId>
 			<version>2.1.25</version>
 		</dependency>
-		
     </dependencies>
 
     <build>
