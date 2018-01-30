@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" 
+	xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"     
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:b="http://bootsfaces.net/ui"
+>     
+    <h:head>
+        <!-- Required meta tags -->
+    	<meta charset="utf-8" />
+    	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+		<title>Circle Calculator</title>		
+    </h:head>
+    <h:body>        
+       
+       <b:jumbotron> 
+       		<h1>Circle Calculator</h1>
+       </b:jumbotron>
+       
+        <h:form >
+            <b:messages id="messages" />
+            
+            <b:inputText id="radius"
+                         label="Radius"
+                         value="#{currentCircleController.currentCircle.radius}"                             
+                         required="true"
+                         requiredMessage="Radius field value is required"
+                         >
+                <b:focus />              
+            </b:inputText>            
+            
+            <b:commandButton value="Get Area" look="primary"
+           		actionListener="#{currentCircleController.calculateArea}"
+           		update="messages">
+           </b:commandButton>
+           
+             <b:commandButton value="Get Diameter" look="primary"
+           		actionListener="#{currentCircleController.calculateDiameter}"
+           		update="messages">
+           </b:commandButton>
+           
+             <b:commandButton value="Get Circumference" look="primary"
+           		actionListener="#{currentCircleController.calculateCircumference}"
+           		update="messages">
+           </b:commandButton>
+           
+        </h:form>
+        
+    </h:body>
+</html>

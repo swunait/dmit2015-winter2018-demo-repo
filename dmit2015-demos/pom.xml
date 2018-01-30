@@ -56,7 +56,7 @@
 
         <!-- maven-compiler-plugin -->
         <maven.compiler.target>1.8</maven.compiler.target>
-        <maven.compiler.source>1.</maven.compiler.source>
+        <maven.compiler.source>1.8</maven.compiler.source>
     </properties>
 
 
@@ -211,6 +211,22 @@
 			<artifactId>primefaces</artifactId>
 			<version>6.1</version>
 		</dependency>
+		<dependency>
+			<groupId>net.bootsfaces</groupId>
+			<artifactId>bootsfaces</artifactId>
+			<version>1.2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.highfaces</groupId>
+			<artifactId>highfaces</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>de.larmic.butterfaces</groupId>
+			<artifactId>components</artifactId>
+			<version>2.1.25</version>
+		</dependency>
+		
     </dependencies>
 
     <build>
