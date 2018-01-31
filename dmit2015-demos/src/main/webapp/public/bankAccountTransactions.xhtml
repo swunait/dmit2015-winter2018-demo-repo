@@ -1,90 +1,107 @@
 <!DOCTYPE html>
-<html lang="en" 
-	xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:h="http://xmlns.jcp.org/jsf/html"
-    xmlns:f="http://xmlns.jcp.org/jsf/core"
-    xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"     
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:o="http://omnifaces.org/ui"
 	xmlns:of="http://omnifaces.org/functions"
-	xmlns:b="http://bootsfaces.net/ui"
->     
-    <h:head>
-        <!-- Required meta tags -->
-    	<meta charset="utf-8" />
-    	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	xmlns:b="http://bootsfaces.net/ui" 
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8" />
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-		<title>BankAccount Transactions</title>		
-    </h:head>
-    <h:body>        
-       
-       <b:jumbotron> 
-       		<h1>BankAccount Transactions</h1>
-       </b:jumbotron>
-       
-        <b:form >
-            <b:messages id="messages" />
-            
-            <b:panelGrid colSpans="2,10" size="xs">
-            	<h:outputLabel value="BankAccount ID" />
-            	<h:outputText value="#{currentBankAccountController.currentBankAccount.id}" />
+	<title>BankAccount Transactions</title>
+</h:head>
+<h:body>
 
-				<h:outputLabel value="Date Created" />
-            	<h:outputText value="#{currentBankAccountController.currentBankAccount.dateCreated}" />
+	<b:jumbotron>
+		<h1>BankAccount Transactions</h1>
+	</b:jumbotron>
 
-				<h:outputLabel value="Balance" />
-            	<h:outputText id="balance" value="#{currentBankAccountController.currentBankAccount.balance}">
-            		<f:convertNumber type="currency" />
-            	</h:outputText>            	
-            </b:panelGrid>
-            
-            <b:inputText id="description"
-                         label="Description"
-                         value="#{currentBankAccountController.description}"
-                         required="true"
-                         requiredMessage="Description field value is required."                             
-                         >
-            </b:inputText>          
+	<b:form>
+		<b:messages id="messages" />
 
-            <b:inputText id="amount"
-                         label="Amount"
-                         value="#{currentBankAccountController.amount}"
-                         required="true"
-                         requiredMessage="Transaction amount field value is required."                             
-                         >
-            </b:inputText>                               
-            
-            <b:commandButton value="Deposit" look="success"
-           		actionListener="#{currentBankAccountController.doDeposit}"
-           		ajax="true"
-           		update="messages transactions balance amount description">
-           </b:commandButton>
+		<b:panelGrid colSpans="2,10" size="xs">
+			<h:outputLabel value="BankAccount ID" />
+			<h:outputText
+				value="#{currentBankAccountController.currentBankAccount.id}" />
 
-            <b:commandButton value="Withdraw" look="danger"
-           		actionListener="#{currentBankAccountController.doWithdraw}"
-           		ajax="true"
-           		update="messages transactions balance amount description">
-           </b:commandButton>
-           
-           <b:dataTable id="transactions" 
-           		value="#{currentBankAccountController.currentBankAccount.transactions}" 
-           		var="currentTransaction">
-           		<b:dataTableColumn label="Date">
-           			<h:outputText value="#{currentTransaction.date}">
-           			</h:outputText>           			
-           		</b:dataTableColumn>
-           		<b:dataTableColumn label="Description" value="#{currentTransaction.description}">
-           		</b:dataTableColumn>
-           		<b:dataTableColumn label="Type" value="#{currentTransaction.type == 'W' ? 'Withdrawl' : 'Deposit'}">
-           		</b:dataTableColumn>
-           		<b:dataTableColumn label="Amount">
-           			<h:outputText value="#{currentTransaction.amount}">
-           				<f:convertNumber type="currency" />
-           			</h:outputText>           			
-           		</b:dataTableColumn>
-           		
-           </b:dataTable>
-           
-        </b:form>
-        
-    </h:body>
+			<h:outputLabel value="Date Created" />
+			<h:outputText
+				value="#{currentBankAccountController.currentBankAccount.dateCreated}" />
+
+			<h:outputLabel value="Balance" />
+			<h:outputText id="balance"
+				value="#{currentBankAccountController.currentBankAccount.balance}">
+				<f:convertNumber type="currency" />
+			</h:outputText>
+		</b:panelGrid>
+
+		<b:inputText id="description" label="Description"
+			value="#{currentBankAccountController.description}" required="true"
+			requiredMessage="Description field value is required.">
+		</b:inputText>
+
+		<b:inputText id="amount" label="Amount"
+			value="#{currentBankAccountController.amount}" required="true"
+			requiredMessage="Transaction amount field value is required.">
+		</b:inputText>
+
+		<b:row>
+			<b:column span="1">
+				<b:commandButton value="Deposit" look="primary"
+					actionListener="#{currentBankAccountController.doDeposit}"
+					ajax="true"
+					update="messages transactions balance amount description barChart">
+				</b:commandButton>
+			</b:column>
+			<b:column span="1">
+				<b:commandButton value="Withdraw" look="success"
+					actionListener="#{currentBankAccountController.doWithdraw}"
+					ajax="true"
+					update="messages transactions balance amount description barChart">
+				</b:commandButton>
+			</b:column>
+			<b:column span="1">
+				<b:commandButton value="Update Chart" look="info"
+					actionListener="#{currentBankAccountController.populateChart}"
+					immediate="true"
+					ajax="false" >
+				</b:commandButton>
+			</b:column>
+		</b:row>
+
+		<b:dataTable id="transactions"
+			value="#{currentBankAccountController.currentBankAccount.transactions}"
+			var="currentTransaction">
+			<b:dataTableColumn label="Date">
+				<h:outputText value="#{currentTransaction.date}">
+				</h:outputText>
+			</b:dataTableColumn>
+			<b:dataTableColumn label="Description"
+				value="#{currentTransaction.description}">
+			</b:dataTableColumn>
+			<b:dataTableColumn label="Type"
+				value="#{currentTransaction.type == 'W' ? 'Withdrawl' : 'Deposit'}">
+			</b:dataTableColumn>
+			<b:dataTableColumn label="Amount">
+				<h:outputText value="#{currentTransaction.amount}">
+					<f:convertNumber type="currency" />
+				</h:outputText>
+			</b:dataTableColumn>
+			<b:dataTableColumn label="Balance">
+				<h:outputText value="#{currentTransaction.balance}">
+					<f:convertNumber type="currency" />
+				</h:outputText>
+			</b:dataTableColumn>
+		</b:dataTable>
+		
+		<p:chart id="barChart" type="bar" model="#{currentBankAccountController.currentBarChartModel}" />
+
+	</b:form>
+
+</h:body>
 </html>

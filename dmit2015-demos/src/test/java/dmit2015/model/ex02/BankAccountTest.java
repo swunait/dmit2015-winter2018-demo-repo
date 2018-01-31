@@ -7,10 +7,12 @@ import java.util.UUID;
 
 import org.junit.Test;
 
+import dmit2015.model.ex03.InsufficientFundsException;
+
 public class BankAccountTest {
 
 	@Test
-	public void testAllMethods() {
+	public void testAllMethods() throws InsufficientFundsException {
 		// Construct a new BankAccount object
 		BankAccount account1 = new BankAccount(UUID.randomUUID(), 
 				BigDecimal.valueOf(100), "John Doe");

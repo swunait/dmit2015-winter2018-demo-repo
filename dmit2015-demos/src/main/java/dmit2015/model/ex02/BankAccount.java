@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import dmit2015.model.ex03.InsufficientFundsException;
+
 public class BankAccount {
 
 	private UUID id = UUID.randomUUID();				// +getter +setter
@@ -90,10 +92,10 @@ public class BankAccount {
 		return balance;
 	}
 	
-	public void withdraw(double amount, String description) {
+	public void withdraw(double amount, String description) throws InsufficientFundsException {
 		withdraw(BigDecimal.valueOf(amount), description);
 	}
-	public void withdraw(BigDecimal amount, String description) {
+	public void withdraw(BigDecimal amount, String description) throws InsufficientFundsException {
 		if (amount.doubleValue() > 0) {
 			if (amount.doubleValue() <= balance.doubleValue()) {
 				balance = balance.subtract(amount);		
@@ -101,6 +103,10 @@ public class BankAccount {
 				Transaction currentTransaction = new Transaction('W', amount, balance, description);
 				// Add the currentTransaction to the list of transactions
 				transactions.add(currentTransaction);
+			} else {
+				double overAmount = amount.doubleValue() - balance.doubleValue();
+				String message = String.format("The withdraw was not successful. Your account is short $%,.2f", overAmount);
+				throw new InsufficientFundsException(message);
 			}
 		}
 	}
