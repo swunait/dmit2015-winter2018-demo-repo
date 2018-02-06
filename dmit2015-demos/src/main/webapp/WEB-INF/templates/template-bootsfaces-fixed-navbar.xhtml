@@ -1,0 +1,55 @@
+<!DOCTYPE html >
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:p="http://primefaces.org/ui"  
+	xmlns:b="http://bootsfaces.net/ui">	
+
+<h:head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="${description}"/>
+    <meta name="keywords" content="${keywords}" />
+	<title>${title}</title>  
+			
+	<ui:insert name="externalstyles">
+	</ui:insert>
+	
+	<style>
+		<ui:insert name="internalstyles">	
+		</ui:insert>	
+	</style>
+</h:head>
+
+<h:body style="padding: 60px; min-height: 2000px;">
+
+    <b:navBar brand="JSF Demo" brandHref="#{request.contextPath}/index.xhtml" fixed="top">
+        <b:navbarLinks>
+        	<b:dropMenu value="Hello">
+            <b:navLink value="Hello JSF" href="#{request.contextPath}/public/hello-jsf.xhtml"></b:navLink>
+            <b:navLink value="Hello JSF wtih AJAX" href="#{request.contextPath}/public/hello-jsf-ajax.xhtml"></b:navLink>
+            <b:navLink value="Hello PrimeFaces" href="#{request.contextPath}/public/hello-primefaces.xhtml"></b:navLink>
+            <b:navLink value="Hello BootsFaces" href="#{request.contextPath}/public/hello-bootsfaces.xhtml"></b:navLink>
+            <b:navLink value="Hello ButterFaces" href="#{request.contextPath}/public/hello-butterfaces.xhtml"></b:navLink>            
+        </b:dropMenu>
+        <b:navLink value="Mortgage Calculator" href="#{request.contextPath}/public/mortgageCalculator.xhtml"></b:navLink>
+        </b:navbarLinks>
+    </b:navBar>
+
+    <b:container>
+        <ui:insert name="maincontent">
+        	NO MAIN CONTENT PROVIDED
+        </ui:insert>
+    </b:container>
+                
+</h:body>
+
+</html>
