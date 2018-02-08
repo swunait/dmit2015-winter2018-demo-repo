@@ -28,6 +28,15 @@
       <jta-data-source>java:jboss/northwindDS</jta-data-source>
       <class>northwind.entity.Category</class>
       <class>northwind.entity.Shipper</class>
+      <class>northwind.entity.Customer</class>
+      <class>northwind.entity.Employee</class>
+      <class>northwind.entity.OrderDetail</class>
+      <class>northwind.entity.OrderDetailPK</class>
+      <class>northwind.entity.Order</class>
+      <class>northwind.entity.Product</class>
+      <class>northwind.entity.Region</class>
+      <class>northwind.entity.Supplier</class>
+      <class>northwind.entity.Territory</class>
       <properties>
          <!-- Properties for Hibernate -->
          <property name="hibernate.hbm2ddl.auto" value="none" />
