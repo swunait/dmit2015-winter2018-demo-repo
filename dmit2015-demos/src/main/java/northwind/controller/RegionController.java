@@ -39,7 +39,7 @@ public class RegionController implements Serializable {
 		try {
 			nortwindService.addRegion(regionDetail);
 			regionDetail = new Region();
-			Messages.addFlashGlobalInfo("Create region was successful.");
+			Messages.addGlobalInfo("Create region was successful.");
 		} catch(Exception e) {
 			Messages.addGlobalError("Create region was not successful.", e.getMessage());
 		}
@@ -49,7 +49,7 @@ public class RegionController implements Serializable {
 		if (id > 0 ) {
 			Region item  = nortwindService.findOneRegion(id);
 			if (item == null) {
-				Messages.addGlobalError("Bad request. Unknown region id {}.", id);
+				Messages.addGlobalError("Bad request. Unknown region id {0}.", id);
 			}
 			editMode = true;
 			regionDetail = item;			
