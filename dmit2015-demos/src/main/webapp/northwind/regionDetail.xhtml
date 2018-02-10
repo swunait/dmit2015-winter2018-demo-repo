@@ -30,6 +30,7 @@
 		<b:inputText id="regionId" 
 			label="RegionID" 
 			readonly="#{currentRegionController.editMode ? 'true' : 'false'}"
+			rendered="#{currentRegionController.editMode != false}"
 			value="#{currentRegionController.regionDetail.regionID}"
 			placeholder="Enter regionID">
 		</b:inputText>
@@ -44,8 +45,7 @@
 			icon-awesome="save"
 			look="primary"
 			rendered="#{!currentRegionController.editMode}"
-			ajax="true" update="messages, description"
-			actionListener="#{currentRegionController.createRegion}">
+			action="#{currentRegionController.createRegion}">
 		</b:commandButton>
 		
 		<b:commandButton value="Save" 

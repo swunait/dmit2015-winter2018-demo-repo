@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -20,7 +19,7 @@ public class RegionController implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Inject
-	private NorthwindDatabaseService nortwindService;
+	private NorthwindDatabaseService northwindService;
 	
 	// The Region to create or edit or delete
 	private Region regionDetail;		// +getter +setter
@@ -35,50 +34,72 @@ public class RegionController implements Serializable {
 		regionDetail = new Region();
 	}
 	
-	public void createRegion(ActionEvent event) {
+	public String createRegion() {
+		String outcome = null;
+		
 		try {
-			nortwindService.addRegion(regionDetail);
+			northwindService.addRegion(regionDetail);
 			regionDetail = new Region();
-			Messages.addGlobalInfo("Create region was successful.");
+			Messages.addFlashGlobalInfo("Create was successful.");
+			outcome = "viewRegions?faces-redirect=true";
 		} catch(Exception e) {
-			Messages.addGlobalError("Create region was not successful.", e.getMessage());
+			Messages.addGlobalError("Create was not successful.", e.getMessage());
 		}
+		
+		return outcome;
 	}
 	
 	public void findRegionById() {
 		if (id > 0 ) {
-			Region item  = nortwindService.findOneRegion(id);
+			Region item  = northwindService.findOneRegion(id);
 			if (item == null) {
-				Messages.addGlobalError("Bad request. Unknown region id {0}.", id);
+				Messages.addGlobalError("Bad request. Unknown id {0}.", id);
+			} else {
+				editMode = true;
+				regionDetail = item;							
 			}
-			editMode = true;
-			regionDetail = item;			
 		}
 	}
 	
 	public String updateRegion() {
-		nortwindService.updateRegion(regionDetail);
-		regionDetail = new Region();
-		Messages.addFlashGlobalInfo("Update Region was successful.");
-		editMode = false;
-		return "/northwind/viewRegions?faces-redirect=true";
+		String outcome = null;
+		
+		try {
+			northwindService.updateRegion(regionDetail);
+			regionDetail = new Region();
+			Messages.addFlashGlobalInfo("Update was successful.");
+			editMode = false;
+			outcome = "viewRegions?faces-redirect=true";
+		} catch (Exception e) {
+			Messages.addFlashGlobalError("Update was not successful. {0}", e.getMessage());
+		}
+
+		return outcome;
 	}
 	
 	public String removeRegion() {
-		nortwindService.deleteRegion(regionDetail);
-		regionDetail = new Region();
-		Messages.addFlashGlobalInfo("Remove Region {0} was successful", regionDetail.getRegionID());
-		editMode = false;
-		return "/northwind/viewRegions?faces-redirect=true";
+		String outcome = null;
+		
+		try {
+			northwindService.deleteRegion(regionDetail);
+			regionDetail = new Region();
+			Messages.addFlashGlobalInfo("Remove was successful");
+			editMode = false;
+			outcome = "viewRegions?faces-redirect=true";
+		} catch (Exception e) {
+			Messages.addFlashGlobalError("Remove was not successful. {0}", e.getMessage());
+		}
+		
+		return outcome;
 	}
 	
 	public String cancel() {
 		editMode = false;
-		return "/northwind/viewRegions?faces-redirect=true";
+		return "viewRegions?faces-redirect=true";
 	}
 	
 	public List<Region> retreiveAllRegions() {
-		return nortwindService.findAllRegion();
+		return northwindService.findAllRegion();
 	}
 
 	public Region getRegionDetail() {

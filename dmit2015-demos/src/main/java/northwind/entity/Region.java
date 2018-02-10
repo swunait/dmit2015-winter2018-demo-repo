@@ -2,6 +2,10 @@ package northwind.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+
 import java.util.List;
 
 
@@ -18,6 +22,8 @@ public class Region implements Serializable {
 	@Column(name="RegionID")
 	private int regionID;
 
+	@NotBlank(message="Region Description field value is required")
+	@Length(min=2, max=50, message="Region Description field value must contain between 2 to 50 characters.")
 	@Column(name="RegionDescription")
 	private String regionDescription;
 
