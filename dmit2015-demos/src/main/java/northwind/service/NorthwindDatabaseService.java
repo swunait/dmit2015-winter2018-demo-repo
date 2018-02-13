@@ -9,6 +9,7 @@ import javax.persistence.Query;
 
 import northwind.entity.Category;
 import northwind.entity.Region;
+import northwind.entity.Shipper;
 import northwind.entity.Territory;
 
 @Stateless	// Mark this class as stateless EJB.
@@ -93,6 +94,29 @@ public class NorthwindDatabaseService {
 	public List<Territory> findAllTerritory() {
 		return entityManager.createQuery(
 			"FROM Territory",Territory.class
+			).getResultList();
+	}
+	
+	public void addShipper(Shipper newShipper) {
+		entityManager.persist(newShipper);
+	}
+	
+	public void updateShipper(Shipper existingShipper) {
+		entityManager.merge( existingShipper );
+	}
+	
+	public void deleteShipper(Shipper existingShipper) {
+		existingShipper = entityManager.merge(existingShipper);
+		entityManager.remove( existingShipper );
+	}
+	
+	public Shipper findOneShipper(int ShipperId) {
+		return entityManager.find(Shipper.class, ShipperId);	
+	}
+	
+	public List<Shipper> findAllShipper() {
+		return entityManager.createQuery(
+			"FROM Shipper",Shipper.class
 			).getResultList();
 	}
 	

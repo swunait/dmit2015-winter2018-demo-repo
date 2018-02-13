@@ -82,8 +82,8 @@ public class RegionController implements Serializable {
 		
 		try {
 			northwindService.deleteRegion(regionDetail);
-			regionDetail = new Region();
 			Messages.addFlashGlobalInfo("Remove was successful");
+			regionDetail = new Region();
 			editMode = false;
 			outcome = "viewRegions?faces-redirect=true";
 		} catch (Exception e) {

@@ -2,6 +2,10 @@ package northwind.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+
 import java.util.List;
 
 
@@ -20,6 +24,8 @@ public class Shipper implements Serializable {
 	@Column(name="ShipperID")
 	private int shipperID;
 
+	@NotBlank(message="Company Name field value is required")
+	@Length(min=2, max=40, message="Company Name field value must be 2 to 40 characters.")
 	@Column(name="CompanyName")
 	private String companyName;
 

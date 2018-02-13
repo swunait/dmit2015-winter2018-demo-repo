@@ -98,8 +98,8 @@ public class TerritoryController implements Serializable {
 		
 		try {
 			northwindService.deleteTerritory(territoryDetail);
-			territoryDetail = new Territory();
 			Messages.addFlashGlobalInfo("Remove Territory {0} was successful", territoryDetail.getTerritoryID());
+			territoryDetail = new Territory();
 			editMode = false;
 			outcome = "viewTerritories?faces-redirect=true";
 		} catch (Exception e) {
