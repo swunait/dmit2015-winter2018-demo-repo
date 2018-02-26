@@ -3,6 +3,8 @@ package northwind.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 
 /**
  * The persistent class for the Territories database table.
@@ -18,6 +20,7 @@ public class Territory implements Serializable {
 	@Column(name="TerritoryID")
 	private String territoryID;
 
+	@NotBlank(message="Territory Description field value is required")
 	@Column(name="TerritoryDescription")
 	private String territoryDescription;
 

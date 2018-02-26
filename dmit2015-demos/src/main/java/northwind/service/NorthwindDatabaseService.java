@@ -9,6 +9,7 @@ import javax.persistence.Query;
 
 import northwind.entity.Category;
 import northwind.entity.Region;
+import northwind.entity.Shipper;
 import northwind.entity.Territory;
 import northwind.report.CategorySales;
 
@@ -97,6 +98,31 @@ public class NorthwindDatabaseService {
 			).getResultList();
 	}
 	
+	public void addShipper(Shipper newShipper) {
+		entityManager.persist(newShipper);
+	}
+	
+	public void updateShipper(Shipper existingShipper) {
+		entityManager.merge( existingShipper );
+	}
+	
+	public void deleteShipper(Shipper existingShipper) {
+		existingShipper = entityManager.merge(existingShipper);
+		entityManager.remove( existingShipper );
+	}
+	
+	public Shipper findOneShipper(int ShipperId) {
+		return entityManager.find(Shipper.class, ShipperId);	
+	}
+	
+	public List<Shipper> findAllShipper() {
+		return entityManager.createQuery(
+			"FROM Shipper",Shipper.class
+			).getResultList();
+	}
+	
+	
+	
 
 	public List<Integer> findYearsWithOrders() {
 		return entityManager.createQuery(
@@ -131,4 +157,7 @@ public class NorthwindDatabaseService {
 			.setParameter("yearValue", year)
 			.getResultList();
 	}
+
+	
+	
 }
