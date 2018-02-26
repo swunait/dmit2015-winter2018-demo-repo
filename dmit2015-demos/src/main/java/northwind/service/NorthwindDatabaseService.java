@@ -10,6 +10,7 @@ import javax.persistence.Query;
 import northwind.entity.Category;
 import northwind.entity.Region;
 import northwind.entity.Territory;
+import northwind.report.CategorySales;
 
 @Stateless	// Mark this class as stateless EJB.
 public class NorthwindDatabaseService {
@@ -96,4 +97,38 @@ public class NorthwindDatabaseService {
 			).getResultList();
 	}
 	
+
+	public List<Integer> findYearsWithOrders() {
+		return entityManager.createQuery(
+			"SELECT YEAR(o.shippedDate) "
+			+ "FROM Order o "
+			+ "WHERE YEAR(o.shippedDate) IS NOT NULL "
+			+ "GROUP BY YEAR(o.shippedDate) "
+			+ "ORDER BY YEAR(o.shippedDate) "
+			, Integer.class)
+			.getResultList();
+	}
+	
+	public List<CategorySales> findCategorySales() {
+		return entityManager.createQuery(
+			"SELECT new northwind.report.CategorySales(c.categoryName, SUM(od.unitPrice * od.quantity * (1 - od.discount)) ) "
+			+ " FROM OrderDetail od, IN (od.product) p, IN (p.category) c, IN (od.order) o "
+			+ " GROUP BY c.categoryID",
+			CategorySales.class)
+			.getResultList();
+	}
+	
+	public List<CategorySales> findCategorySalesForYear(Integer year) {
+		if (year == null) {
+			return findCategorySales();
+		}
+		return entityManager.createQuery(
+			"SELECT new northwind.report.CategorySales(c.categoryName, SUM(od.unitPrice * od.quantity * (1 - od.discount)) ) "
+			+ " FROM OrderDetail od, IN (od.product) p, IN (p.category) c, IN (od.order) o "
+			+ " WHERE YEAR(o.shippedDate) = :yearValue "
+			+ " GROUP BY c.categoryID",
+			CategorySales.class)
+			.setParameter("yearValue", year)
+			.getResultList();
+	}
 }

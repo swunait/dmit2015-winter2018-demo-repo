@@ -1,21 +1,20 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:f5="http://xmlns.jcp.org/jsf/passthrough" 
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:o="http://omnifaces.org/ui"
 	xmlns:of="http://omnifaces.org/functions"
-	xmlns:b="http://bootsfaces.net/ui" 
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:hf="http://highfaces.org"
-	template="/WEB-INF/templates/template-northwind.xhtml">
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8" />
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-	<ui:param name="title" value="Territory Detail" />
-
-	<ui:define name="maincontent">
-
+	<title>TERRITORY Detail</title>
+</h:head>
+<h:body>
 	<f:metadata>
 		<f:viewParam name="id" value="#{currentTerritoryController.id}" />
 		<f:event listener="#{currentTerritoryController.findTerritoryById()}" type="preRenderView"></f:event>
@@ -81,6 +80,5 @@
 		</b:commandButton>
 	</b:form>
 
-	</ui:define>
-
-</ui:composition>
+</h:body>
+</html>

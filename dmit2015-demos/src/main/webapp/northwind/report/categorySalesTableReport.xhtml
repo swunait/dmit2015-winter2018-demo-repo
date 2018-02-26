@@ -1,0 +1,49 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:f5="http://xmlns.jcp.org/jsf/passthrough" 
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:b="http://bootsfaces.net/ui" 
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:hf="http://highfaces.org"
+	template="/WEB-INF/templates/template-northwind.xhtml">
+
+	<ui:param name="title" value="Category Sales Report" />
+
+	<ui:define name="maincontent">
+
+		<b:jumbotron>
+			<h1>Category Sales Report</h1>
+		</b:jumbotron>
+		
+		<b:messages id="messages" />
+		
+		<b:form>	
+  			<b:selectOneMenu id="year" value="#{categorySalesReportController.selectedYear}" 
+				label="Report Year"
+				update="reportOutputPanel"
+				onchange="ajax:categorySalesReportController.createReport();">
+				<f:selectItem itemLabel="All Years" itemValue="" />
+				<f:selectItems value="#{categorySalesReportController.retreiveYears()}" var="year"
+					itemLabel="#{year}"
+					itemValue="#{year}" />
+  			</b:selectOneMenu>
+  			
+			<p:outputPanel id="reportOutputPanel">
+				<b:dataTable value="#{categorySalesReportController.categorySales}" var="item"
+					searching="false"
+					paginated="true">
+					<b:dataTableColumn label="Category Name" value="#{item.categoryName}" />
+					<b:dataTableColumn label="Total Sales" value="#{of:formatCurrency(item.salesTotal,'$')}" style-class="text-right"/>
+				</b:dataTable>					
+			</p:outputPanel>
+			
+		</b:form>
+
+	</ui:define>
+
+</ui:composition>
