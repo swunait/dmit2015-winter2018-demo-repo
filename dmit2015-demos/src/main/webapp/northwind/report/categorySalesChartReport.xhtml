@@ -23,15 +23,17 @@
 		<b:messages id="messages" />
 		
 		<b:form>	
-  			<b:selectOneMenu id="year" value="#{categorySalesReportController.selectedYear}" 
+  			<p:outputLabel for="year" value="Report Year:" />
+  			<p:selectOneMenu id="year" value="#{categorySalesReportController.selectedYear}" 
+  				styleClass="form-control"
 				label="Report Year"
-				update="reportOutputPanel"
-				onchange="ajax:categorySalesReportController.createReport();">
+				>
+				<p:ajax event="change" update="reportOutputPanel" listener="#{categorySalesReportController.createReport()}" />
 				<f:selectItem itemLabel="All Years" itemValue="" />
 				<f:selectItems value="#{categorySalesReportController.retreiveYears()}" var="year"
 					itemLabel="#{year}"
 					itemValue="#{year}" />
-  			</b:selectOneMenu>
+  			</p:selectOneMenu>
   			
 			<p:outputPanel id="reportOutputPanel">
 				<hf:chart id="piechart" type="pie" title="#{categorySalesReportController.reportTitle}"
