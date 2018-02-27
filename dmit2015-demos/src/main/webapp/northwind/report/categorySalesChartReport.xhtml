@@ -24,7 +24,7 @@
 		
 		<b:form>	
   			<p:outputLabel for="year" value="Report Year:" />
-  			<p:selectOneMenu id="year" value="#{categorySalesReportController.selectedYear}" 
+  			<h:selectOneMenu id="year" value="#{categorySalesReportController.selectedYear}" 
   				styleClass="form-control"
 				label="Report Year"
 				>
@@ -33,7 +33,7 @@
 				<f:selectItems value="#{categorySalesReportController.retreiveYears()}" var="year"
 					itemLabel="#{year}"
 					itemValue="#{year}" />
-  			</p:selectOneMenu>
+  			</h:selectOneMenu>
   			
 			<p:outputPanel id="reportOutputPanel">
 				<hf:chart id="piechart" type="pie" title="#{categorySalesReportController.reportTitle}"
