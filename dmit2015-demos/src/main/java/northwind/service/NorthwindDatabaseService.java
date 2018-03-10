@@ -5,9 +5,12 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import northwind.entity.Category;
+import northwind.entity.Customer;
+import northwind.entity.Order;
 import northwind.entity.Region;
 import northwind.entity.Shipper;
 import northwind.entity.Territory;
@@ -159,5 +162,30 @@ public class NorthwindDatabaseService {
 	}
 
 	
+
+	public Order findOneOrderWithDetailsByOrderId(int orderId) {
+		Order querySingleResult = null;
+		try {
+			querySingleResult = entityManager.createQuery(
+				"SELECT o FROM Order o JOIN FETCH o.orderDetails WHERE o.orderID = :orderIdValue", 
+				Order.class)
+				.setParameter("orderIdValue", orderId)
+				.getSingleResult();
+		} catch(NoResultException e) {
+			querySingleResult = null;
+		}
+		return querySingleResult;
+	}
 	
+	public List<Customer> findAllCustomer() {
+		return entityManager.createQuery("SELECT c FROM Customer c ORDER BY c.companyName", Customer.class).getResultList();
+	}
+	
+	public List<Order> findAllOrderByCustomerId(String customerId) {
+		return entityManager.createQuery(
+			"SELECT o FROM Order o WHERE o.customer.customerID = :customerIdValue", 
+			Order.class)
+			.setParameter("customerIdValue", customerId)
+			.getResultList();
+	}
 }

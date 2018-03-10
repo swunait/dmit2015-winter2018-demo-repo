@@ -1,0 +1,163 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:f5="http://xmlns.jcp.org/jsf/passthrough" 
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:b="http://bootsfaces.net/ui" 
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:hf="http://highfaces.org"
+	template="/WEB-INF/templates/template-northwind.xhtml">
+
+	<ui:param name="title" value="View Sales Order" />
+
+	<ui:define name="maincontent">
+
+<b:jumbotron>
+			<h1>View Sales Order</h1>
+		</b:jumbotron>
+		
+		<b:messages id="messages" />
+		
+		<b:form id="queryForm" inline="true">
+			<b:inputText id="searchValue"
+				value="#{orderQueryController.queryOrderIdValue}"
+				label="OrderID"
+				placeholder="enter orderId">
+				<b:focus />
+			</b:inputText>
+			
+			<b:commandButton value="Search"
+				look="primary"
+				ajax="true"
+				update="queryForm:querySingleResultPanel :messages"
+				actionListener="#{orderQueryController.findOrderByOrderId()}">
+			</b:commandButton>	
+			<b:commandButton value="Cancel"
+				look="default"
+				immediate="true"
+				ajax="true"
+				update="queryForm:querySingleResultPanel :messages"
+				actionListener="#{orderQueryController.cancel()}">
+			</b:commandButton>				
+			
+		</b:form>
+		
+		<p:outputPanel id="querySingleResultPanel">
+		
+			<b:panel title="Order Details" 
+				rendered="#{not empty orderQueryController.querySingleResult}">
+				<b:row>
+					<b:column span="6">
+						<b:panel title="Customer Details" collapsible="false" style="height: 250px">
+							<strong>
+								<h:outputText value="#{orderQueryController.querySingleResult.customer.companyName}" /> <br />
+								<h:outputText value="#{orderQueryController.querySingleResult.customer.contactName}" /> <br />
+								<h:outputText value="#{orderQueryController.querySingleResult.customer.contactTitle}" /> <br />
+								<h:outputText value="#{orderQueryController.querySingleResult.customer.address}" /> <br />
+								<h:outputText value="#{orderQueryController.querySingleResult.customer.city}, #{orderQueryController.querySingleResult.customer.region}, #{orderQueryController.querySingleResult.customer.postalCode}" /> <br />
+								<h:outputText value="#{orderQueryController.querySingleResult.customer.country}" /> <br />		
+								<h:outputText value="#{orderQueryController.querySingleResult.customer.phone}" /> <br />													
+							</strong>
+						</b:panel>
+					</b:column>
+					<b:column span="6">						
+						<b:panel title="Order Details" collapsible="false" style="height: 250px">
+							<b:panelGrid colSpans="4,8">
+								<h:outputLabel value="CustomerID" />
+								<h:outputText value="#{orderQueryController.querySingleResult.customer.customerID}" />		
+								
+								<h:outputLabel value="OrderID" />
+								<h:outputText value="#{orderQueryController.querySingleResult.orderID}" />		
+								
+								<h:outputLabel value="Order Date" />
+								<h:outputText value="#{orderQueryController.querySingleResult.orderDate}">
+									<f:convertDateTime pattern="MMMM dd, yyyy"/>
+								</h:outputText>			
+								
+								<h:outputLabel value="Shipped Date" />
+								<h:outputText value="#{orderQueryController.querySingleResult.shippedDate}">
+									<f:convertDateTime pattern="MMMM dd, yyyy"/>
+								</h:outputText>										
+								
+								<h:outputLabel value="Employee" />
+								<h:outputText value="#{orderQueryController.querySingleResult.employee.firstName} #{orderQueryController.querySingleResult.employee.lastName}" />	
+								
+								<h:outputLabel value="Freight" />
+								<h:outputText value="#{orderQueryController.querySingleResult.freight}">
+									<f:convertNumber type="currency"/>
+								</h:outputText>	
+								
+								<h:outputLabel value="Sales Total" />
+								<h:outputText value="#{orderQueryController.invoiceTotal}">
+									<f:convertNumber type="currency"/>
+								</h:outputText>							
+							</b:panelGrid>													
+						</b:panel>
+					</b:column>
+				</b:row>
+			
+					<table class="table table-bordered table-striped">
+						<thead class="thead-inverse">
+							<tr>
+								<th>ID</th>
+								<th>Name</th>
+								<th class="text-right">Qty</th>
+								<th class="text-right">Unit Price</th>
+								<th class="text-right">Discount</th>
+								<th class="text-right">Item Total</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="item" items="#{orderQueryController.querySingleResult.orderDetails}">
+								<tr>
+									<td>#{item.product.productID}</td>
+									<td>#{item.product.productName}</td>
+									<td class="text-right">#{item.quantity}</td>
+									<td class="text-right">
+										<h:outputText value="#{item.unitPrice}">
+											<f:convertNumber type="currency"/>
+										</h:outputText>
+									</td>
+									<td class="text-right">
+										<h:outputText value="#{item.discount}">
+											<f:convertNumber type="percent"/>
+										</h:outputText>
+									</td>
+									<td class="text-right">
+										<h:outputText value="#{(item.unitPrice * item.quantity) * (1 - item.discount)}">
+											<f:convertNumber type="currency"/>
+										</h:outputText>
+									</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+						<tfoot>
+							<tr>
+								<th colspan="5" class="text-right">Freight:</th>
+								<td class="text-right">
+									<h:outputText value="#{orderQueryController.querySingleResult.freight}">
+										<f:convertNumber type="currency"/>
+									</h:outputText>
+								</td>
+							</tr>
+							<tr>
+								<th colspan="5" class="text-right">Total Price:</th>
+								<td class="text-right">
+									<h:outputText value="#{orderQueryController.invoiceTotal}">
+										<f:convertNumber type="currency"/>
+									</h:outputText>
+								</td>
+							</tr>
+						</tfoot>
+					</table>
+			</b:panel>
+		
+		</p:outputPanel>		
+
+	</ui:define>
+
+</ui:composition>
