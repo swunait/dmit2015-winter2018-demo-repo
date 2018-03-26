@@ -1,0 +1,57 @@
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:p="http://primefaces.org/ui"  
+	xmlns:b="http://bootsfaces.net/ui"
+	template="/WEB-INF/templates/template-northwind.xhtml">
+	
+	<ui:param name="title" value="Login Group Management" />
+
+	<ui:define name="maincontent">
+		<b:jumbotron>
+			<h1>Login Group Management</h1>
+		</b:jumbotron>
+		
+		<b:messages id="messages" />
+		
+		<h:form>
+			<b:dataTable id="groups"
+				value="#{loginGroupController.retreiveAllLoginGroups()}" 
+				var="currentLoginGroup"
+				paginated="false"
+				searching="false">
+				
+				<b:dataTableColumn label="ID" value="#{currentLoginGroup.id}" />
+				<b:dataTableColumn label="Group Name" value="#{currentLoginGroup.groupname}" />
+				<b:dataTableColumn label="Action">
+					<b:commandButton value="remove" icon-awesome="trash"
+						immediate="true"
+						ajax="false"
+						actionListener="#{loginGroupController.removeLoginGroup(currentLoginGroup)}" />
+				</b:dataTableColumn>		
+			</b:dataTable>
+		
+			<b:inputText id="groupname" 
+				label="Group Name"
+				value="#{loginGroupController.groupname}">
+				<b:focus />
+			</b:inputText>
+						
+			<b:commandButton value="Create Group" 	
+				look="primary"
+				actionListener="#{loginGroupController.createLoginGroup()}">
+			</b:commandButton>
+			
+		</h:form>
+				
+	</ui:define>
+
+</ui:composition>

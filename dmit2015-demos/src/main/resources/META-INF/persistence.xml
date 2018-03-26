@@ -25,7 +25,7 @@
          data source, this example data source is just for development and testing! -->
       <!-- The datasource is deployed as WEB-INF/dmit2015-demos-ds.xml, you
          can find it in the source at src/main/webapp/WEB-INF/dmit2015-demos-ds.xml -->
-      <jta-data-source>java:jboss/northwindDS</jta-data-source>
+      <jta-data-source>java:jboss/datasources/northwindDS</jta-data-source>
       <class>northwind.entity.Category</class>
       <class>northwind.entity.Shipper</class>
       <class>northwind.entity.Customer</class>
@@ -37,9 +37,12 @@
       <class>northwind.entity.Region</class>
       <class>northwind.entity.Supplier</class>
       <class>northwind.entity.Territory</class>
+      
+      <class>dmit2015.security.entity.LoginUser</class>
+      <class>dmit2015.security.entity.LoginGroup</class>
       <properties>
          <!-- Properties for Hibernate -->
-         <property name="hibernate.hbm2ddl.auto" value="none" />
+         <property name="hibernate.hbm2ddl.auto" value="update" />
          <property name="hibernate.show_sql" value="false" />
       </properties>
    </persistence-unit>
