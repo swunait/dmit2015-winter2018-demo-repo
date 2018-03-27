@@ -13,7 +13,7 @@ import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
 )
 
 @DatabaseIdentityStoreDefinition(
-	dataSourceLookup="java:jboss/datasources/oeDS",
+	dataSourceLookup="java:jboss/northwindDS",
 	callerQuery="SELECT password FROM LoginUser WHERE username = ?",
 	groupsQuery="SELECT g.groupname FROM LoginUser u, LoginUserGroup ug, LoginGroup g WHERE u.username = ? AND u.id = ug.userid AND ug.groupid = g.id",
 	hashAlgorithm = Pbkdf2PasswordHash.class,
