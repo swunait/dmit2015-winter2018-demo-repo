@@ -53,6 +53,21 @@
             	<b:navLink value="View Order by Customer" href="#{request.contextPath}/northwind/query/viewOrderByCustomer.xhtml"></b:navLink>
         	</b:dropMenu>
         </b:navbarLinks>
+        
+        <h:form>  
+	        <b:navbarLinks pull="right">
+	        	<b:navLink value="Sign In" outcome="/northwind/query/viewOrder" rendered="#{not sessionController.loggedIn}">
+	        	</b:navLink>  
+	        	
+	        	<b:navLink value="Change Password" outcome="/security/changePassword" 
+	        		rendered="#{sessionController.loggedIn}">
+	        	</b:navLink>  
+	        	
+	       		<b:navCommandLink value="Logout #{sessionController.remoteUser}" action="#{sessionController.logout()}" 
+	       			rendered="#{sessionController.loggedIn}">
+	       		</b:navCommandLink>	        
+			</b:navbarLinks>
+		</h:form>
     </b:navBar>
 
     <ui:insert name="maincontent"> 
