@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -17,6 +18,7 @@ import northwind.entity.Territory;
 import northwind.report.CategorySales;
 
 @Stateless	// Mark this class as stateless EJB.
+@Interceptors({NorthwindSecurityInterceptor.class})
 public class NorthwindDatabaseService {
 
 	@Inject

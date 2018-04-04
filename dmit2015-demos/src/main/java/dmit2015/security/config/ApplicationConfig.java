@@ -13,16 +13,16 @@ import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
 		errorPage="/security/customLogin.xhtml?error")
 )
 
-@LdapIdentityStoreDefinition(
-	url = "ldap://192.168.202.227:389/",
-	callerSearchBase = "ou=Departments,dc=dmit2015,dc=ca",
-	callerNameAttribute = "SamAccountName",	
-	groupSearchBase = "ou=Departments,dc=dmit2015,dc=ca",
-	groupMemberAttribute="member",
-	bindDn = "CN=DMIT2015 Student,ou=IT Support,ou=Departments,dc=dmit2015,dc=ca",
-	bindDnPassword = "Password2015",
-	priority = 5
-)
+//@LdapIdentityStoreDefinition(
+//	url = "ldap://192.168.202.227:389/",
+//	callerSearchBase = "ou=Departments,dc=dmit2015,dc=ca",
+//	callerNameAttribute = "SamAccountName",	
+//	groupSearchBase = "ou=Departments,dc=dmit2015,dc=ca",
+//	groupMemberAttribute="member",
+//	bindDn = "CN=DMIT2015 Student,ou=IT Support,ou=Departments,dc=dmit2015,dc=ca",
+//	bindDnPassword = "Password2015",
+//	priority = 5
+//)
 
 @DatabaseIdentityStoreDefinition(
 	dataSourceLookup="java:jboss/northwindDS",

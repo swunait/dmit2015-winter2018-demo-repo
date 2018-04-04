@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJBAccessException;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -42,8 +43,10 @@ public class RegionController implements Serializable {
 			regionDetail = new Region();
 			Messages.addFlashGlobalInfo("Create was successful.");
 			outcome = "viewRegions?faces-redirect=true";
+		} catch(EJBAccessException e) {
+			Messages.addGlobalError(e.getMessage());
 		} catch(Exception e) {
-			Messages.addGlobalError("Create was not successful.", e.getMessage());
+			Messages.addGlobalError("Create was not successful.");
 		}
 		
 		return outcome;
@@ -70,8 +73,10 @@ public class RegionController implements Serializable {
 			Messages.addFlashGlobalInfo("Update was successful.");
 			editMode = false;
 			outcome = "viewRegions?faces-redirect=true";
-		} catch (Exception e) {
-			Messages.addFlashGlobalError("Update was not successful. {0}", e.getMessage());
+		} catch(EJBAccessException e) {
+			Messages.addGlobalError(e.getMessage());
+		} catch(Exception e) {
+			Messages.addGlobalError("Update was not successful.");
 		}
 
 		return outcome;
@@ -86,8 +91,10 @@ public class RegionController implements Serializable {
 			regionDetail = new Region();
 			editMode = false;
 			outcome = "viewRegions?faces-redirect=true";
-		} catch (Exception e) {
-			Messages.addFlashGlobalError("Remove was not successful. {0}", e.getMessage());
+		} catch(EJBAccessException e) {
+			Messages.addGlobalError(e.getMessage());
+		} catch(Exception e) {
+			Messages.addGlobalError("Remove was not successful.");
 		}
 		
 		return outcome;

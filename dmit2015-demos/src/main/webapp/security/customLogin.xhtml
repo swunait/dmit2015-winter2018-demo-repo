@@ -22,7 +22,7 @@
 				<h1>Sign in</h1>
 			</b:jumbotron>		
 		
-			<c:if test="#{not empty param.error}">
+			<c:if test="#{param.error != null}">
 				<b:alert severity="danger">Invalid login credentials</b:alert>
 			</c:if>
 		

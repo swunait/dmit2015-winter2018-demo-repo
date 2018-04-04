@@ -57,7 +57,8 @@
 		<mime-type>font/woff2</mime-type>
 	</mime-mapping>
 
-<!-- 	<security-constraint>
+
+ 	<security-constraint>
 		<display-name>Use HTTPS only</display-name>
 		<web-resource-collection>
 			<web-resource-name>sslResources</web-resource-name>
@@ -67,45 +68,53 @@
 			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
 		</user-data-constraint>
 	</security-constraint>
- -->
 	
 	<security-role>
-		<role-name>IT</role-name>
+		<role-name>Administrator</role-name>
 	</security-role>
  	<security-role>
-		<role-name>Sales</role-name>
+		<role-name>Customer</role-name>
 	</security-role>
 	<security-role>
-		<role-name>Administration</role-name>
-	</security-role>
-	<security-role>
-		<role-name>Executive</role-name>
+		<role-name>Employee</role-name>
 	</security-role>
 	
  	<security-constraint>
 		<web-resource-collection>
-			<web-resource-name>Sales Resources</web-resource-name>
+			<web-resource-name>queryResources</web-resource-name>
 			<url-pattern>/northwind/query/*</url-pattern>
-		</web-resource-collection>
-		<auth-constraint>
-			<role-name>Sales</role-name>
-			<role-name>IT</role-name>
-		</auth-constraint>
-	</security-constraint>
-
-	<security-constraint>
-		<web-resource-collection>
-			<web-resource-name>Sales Resources</web-resource-name>
 			<url-pattern>/northwind/report/*</url-pattern>
 		</web-resource-collection>
 		<auth-constraint>
-			<role-name>Executive</role-name>
-			<role-name>Administration</role-name>
-			<role-name>Sales</role-name>
-			<role-name>IT</role-name>
+			<role-name>Administrator</role-name>
+			<role-name>Employee</role-name>
 		</auth-constraint>
 	</security-constraint>
-
+	
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>reportResources</web-resource-name>
+			<url-pattern>/northwind/regionDetail.xhtml</url-pattern>
+			<url-pattern>/northwind/territoryDetail.xhtml</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>Administrator</role-name>
+			<role-name>Employee</role-name>
+			<role-name>Customer</role-name>
+		</auth-constraint>
+	</security-constraint>
+	
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>reportResources</web-resource-name>
+			<url-pattern>/northwind/viewRegions.xhtml</url-pattern>
+			<url-pattern>/northwind/viewTerritories.xhtml</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>*</role-name>
+		</auth-constraint>
+	</security-constraint>
+	
 	<error-page>
 		<error-code>401</error-code>
 		<location>/error/401.xhtml</location>
