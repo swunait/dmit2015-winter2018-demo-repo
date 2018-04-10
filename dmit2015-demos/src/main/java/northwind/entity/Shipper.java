@@ -2,6 +2,9 @@ package northwind.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
@@ -16,6 +19,7 @@ import java.util.List;
 @Entity
 @Table(name="Shippers")
 @NamedQuery(name="Shipper.findAll", query="SELECT s FROM Shipper s")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Shipper implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -34,6 +38,7 @@ public class Shipper implements Serializable {
 
 	//bi-directional many-to-one association to Order
 	@OneToMany(mappedBy="shipper")
+	@XmlTransient
 	private List<Order> orders;
 
 	public Shipper() {

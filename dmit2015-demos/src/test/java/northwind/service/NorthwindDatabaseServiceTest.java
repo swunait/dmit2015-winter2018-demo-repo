@@ -25,13 +25,13 @@ public class NorthwindDatabaseServiceTest {
     public static Archive<?> createTestArchive() {
         return ShrinkWrap.create(WebArchive.class, "test.war")
         		.addPackage("northwind.entity")
-                .addClasses(NorthwindDatabaseService.class, Resources.class)
+                .addClasses(NorthwindService.class, Resources.class)
                 .addAsResource("META-INF/persistence.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
    }
 
 	@Inject
-	private NorthwindDatabaseService northwindDB;
+	private NorthwindService northwindDB;
 	
 	@Test
 	public void testFindAllCategory() {

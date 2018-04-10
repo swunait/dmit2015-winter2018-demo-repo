@@ -1,0 +1,10 @@
+curl -k -XGET https://localhost:8443/dmit2015-demos/rest/webapi/categories
+
+curl -k -XGET https://localhost:8443/dmit2015-demos/rest/webapi/categories/1
+
+curl -k -XPOST -HContent-type:application/json --data '{"categoryName":"category9","description": "description 9"}' https://localhost:8443/dmit2015-demos/rest/webapi/categories
+ 
+curl -k -XPUT -HContent-type:application/json --data '{"categoryID":9,"categoryName":"category99","description": "Updated description 99"}' https://localhost:8443/dmit2015-demos/rest/webapi/categories 
+
+curl -k -XDELETE https://localhost:8443/dmit2015-demos/rest/webapi/categories/9
+

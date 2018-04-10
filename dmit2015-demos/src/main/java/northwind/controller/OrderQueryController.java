@@ -13,7 +13,7 @@ import org.omnifaces.util.Messages;
 
 import northwind.entity.Customer;
 import northwind.entity.Order;
-import northwind.service.NorthwindDatabaseService;
+import northwind.service.NorthwindService;
 
 @Named
 @ViewScoped
@@ -21,7 +21,7 @@ public class OrderQueryController implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	private NorthwindDatabaseService northwindService;
+	private NorthwindService northwindService;
 	
 	@NotNull(message="Order ID value is required")
 	private Integer queryOrderIdValue;					// +getter +setter

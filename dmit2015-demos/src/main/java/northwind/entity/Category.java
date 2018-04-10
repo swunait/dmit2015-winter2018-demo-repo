@@ -2,6 +2,10 @@ package northwind.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlTransient;
+
 import java.util.List;
 
 
@@ -12,6 +16,7 @@ import java.util.List;
 @Entity
 @Table(name="Categories")
 @NamedQuery(name="Category.findAll", query="SELECT c FROM Category c")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Category implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -33,6 +38,7 @@ public class Category implements Serializable {
 
 	//bi-directional many-to-one association to Product
 	@OneToMany(mappedBy="category")
+	@XmlTransient
 	private List<Product> products;
 
 	public Category() {

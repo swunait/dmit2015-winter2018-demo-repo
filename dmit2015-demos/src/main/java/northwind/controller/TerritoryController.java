@@ -13,7 +13,7 @@ import org.omnifaces.util.Messages;
 
 import northwind.entity.Region;
 import northwind.entity.Territory;
-import northwind.service.NorthwindDatabaseService;
+import northwind.service.NorthwindService;
 
 @Named("currentTerritoryController")
 @ViewScoped
@@ -21,7 +21,7 @@ public class TerritoryController implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Inject
-	private NorthwindDatabaseService northwindService;
+	private NorthwindService northwindService;
 	
 	// The Territory to create or edit or delete
 	private Territory territoryDetail;		// +getter +setter

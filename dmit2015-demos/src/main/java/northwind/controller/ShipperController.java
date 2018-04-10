@@ -11,7 +11,7 @@ import javax.inject.Named;
 import org.omnifaces.util.Messages;
 
 import northwind.entity.Shipper;
-import northwind.service.NorthwindDatabaseService;
+import northwind.service.NorthwindService;
 
 @Named("currentShipperController")
 @ViewScoped
@@ -19,7 +19,7 @@ public class ShipperController implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Inject
-	private NorthwindDatabaseService northwindService;
+	private NorthwindService northwindService;
 	
 	// The Shipper to create or edit or delete
 	private Shipper shipperDetail;		// +getter +setter

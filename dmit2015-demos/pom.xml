@@ -47,11 +47,11 @@
 
         <!-- Define the version of the JBoss BOMs we want to import to specify 
             tested stacks. -->
-        <version.jboss.bom>8.2.1.Final</version.jboss.bom>
+        <version.jboss.bom>11.0.0.Final</version.jboss.bom>
 
         <!-- other plugin versions -->
         <version.compiler.plugin>3.1</version.compiler.plugin>
-        <version.surefire.plugin>2.16</version.surefire.plugin>
+        <version.surefire.plugin>2.17</version.surefire.plugin>
         <version.war.plugin>2.5</version.war.plugin>
 
         <!-- maven-compiler-plugin -->
@@ -62,29 +62,14 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- JBoss distributes a complete set of Java EE 7 APIs including a Bill
-                of Materials (BOM). A BOM specifies the versions of a "stack" (or a collection) 
-                of artifacts. We use this here so that we always get the correct versions 
-                of artifacts. Here we use the jboss-javaee-7.0-with-tools stack (you can
-                read this as the JBoss stack of the Java EE 7 APIs, with some extras tools
-                for your project, such as Arquillian for testing) and the jboss-javaee-7.0-with-hibernate
-                stack you can read this as the JBoss stack of the Java EE 7 APIs, with extras
-                from the Hibernate family of projects) -->
-            <dependency>
-                <groupId>org.wildfly.bom</groupId>
-                <artifactId>jboss-javaee-7.0-with-tools</artifactId>
-                <version>${version.jboss.bom}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.wildfly.bom</groupId>
-                <artifactId>jboss-javaee-7.0-with-hibernate</artifactId>
-                <version>${version.jboss.bom}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
+			<dependency>
+				<groupId>org.wildfly.bom</groupId>
+				<artifactId>wildfly-javaee7-with-tools</artifactId>
+				<version>${version.jboss.bom}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
     </dependencyManagement>
 
     <dependencies>
@@ -92,87 +77,13 @@
         <!-- First declare the APIs we depend on and need for compilation. All 
             of them are provided by JBoss WildFly -->
 
-        <!-- Import the CDI API, we use provided scope as the API is included in 
-            JBoss WildFly -->
         <dependency>
-            <groupId>javax.enterprise</groupId>
-            <artifactId>cdi-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- Import the Common Annotations API (JSR-250), we use provided scope 
-            as the API is included in JBoss WildFly -->
-        <dependency>
-            <groupId>org.jboss.spec.javax.annotation</groupId>
-            <artifactId>jboss-annotations-api_1.2_spec</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- Import the JAX-RS API, we use provided scope as the API is included 
-            in JBoss WildFly -->
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>jaxrs-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- Import the JPA API, we use provided scope as the API is included in 
-            JBoss WildFly -->
-        <dependency>
-            <groupId>org.hibernate.javax.persistence</groupId>
-            <artifactId>hibernate-jpa-2.1-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- Import the EJB API, we use provided scope as the API is included in 
-            JBoss WildFly -->
-        <dependency>
-            <groupId>org.jboss.spec.javax.ejb</groupId>
-            <artifactId>jboss-ejb-api_3.2_spec</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- JSR-303 (Bean Validation) Implementation -->
-        <!-- Provides portable constraints such as @Email -->
-        <!-- Hibernate Validator is shipped in JBoss WildFly -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <!-- Import the JSF API, we use provided scope as the API is included in 
-            JBoss WildFly -->
-        <dependency>
-            <groupId>org.jboss.spec.javax.faces</groupId>
-            <artifactId>jboss-jsf-api_2.2_spec</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- Now we declare any tools needed -->
-
-        <!-- Annotation processor to generate the JPA 2.0 metamodel classes for 
-            typesafe criteria queries -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-jpamodelgen</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- Annotation processor that raising compilation errors whenever constraint 
-            annotations are incorrectly used. -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator-annotation-processor</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>7.0</version>
+			<scope>provided</scope>
+		</dependency>
+		
         <!-- Needed for running tests (you may also use TestNG) -->
         <dependency>
             <groupId>junit</groupId>
@@ -234,6 +145,23 @@
 		    <scope>provided</scope>
 		</dependency>
 		
+		<dependency>
+		    <groupId>org.jboss.resteasy</groupId>
+		    <artifactId>resteasy-jaxrs</artifactId>
+		    </dependency>
+		<dependency>
+		    <groupId>org.jboss.resteasy</groupId>
+		    <artifactId>resteasy-client</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.jboss.resteasy</groupId>
+		    <artifactId>resteasy-json-p-provider</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.jboss.resteasy</groupId>
+		    <artifactId>resteasy-jackson-provider</artifactId>
+		</dependency>
+		
     </dependencies>
 
     <build>
@@ -292,7 +220,7 @@
             <id>arq-wildfly-managed</id>
             <dependencies>
                 <dependency>
-                    <groupId>org.wildfly</groupId>
+                    <groupId>org.wildfly.arquillian</groupId>
                     <artifactId>wildfly-arquillian-container-managed</artifactId>
                     <scope>test</scope>
                 </dependency>
@@ -306,7 +234,7 @@
             <id>arq-wildfly-remote</id>
             <dependencies>
                 <dependency>
-                    <groupId>org.wildfly</groupId>
+                    <groupId>org.wildfly.arquillian</groupId>
                     <artifactId>wildfly-arquillian-container-remote</artifactId>
                     <scope>test</scope>
                 </dependency>

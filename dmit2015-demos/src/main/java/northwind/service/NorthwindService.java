@@ -18,8 +18,8 @@ import northwind.entity.Territory;
 import northwind.report.CategorySales;
 
 @Stateless	// Mark this class as stateless EJB.
-@Interceptors({NorthwindSecurityInterceptor.class})
-public class NorthwindDatabaseService {
+//@Interceptors({NorthwindSecurityInterceptor.class})
+public class NorthwindService {
 
 	@Inject
 	private EntityManager entityManager;
@@ -38,6 +38,11 @@ public class NorthwindDatabaseService {
 			throw new Exception("A category with products cannot be deleted.");
 		}
 		entityManager.remove( existingCategory );
+	}
+	
+	public void deleteCategory(int categoryId) throws Exception {
+		Category existingCategory = findOneCategory(categoryId);
+		deleteCategory(existingCategory);
 	}
 	
 	public Category findOneCategory(int categoryId) {

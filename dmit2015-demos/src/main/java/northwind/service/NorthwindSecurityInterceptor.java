@@ -1,17 +1,18 @@
 package northwind.service;
 
-import javax.annotation.Resource;
 import javax.annotation.security.DeclareRoles;
 import javax.ejb.EJBAccessException;
 import javax.ejb.SessionContext;
+import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
+import javax.security.enterprise.SecurityContext;
 
 @DeclareRoles({"Administrator","Employee","Customer"})
 public class NorthwindSecurityInterceptor {
 
-	@Resource
-	private SessionContext sessionContext;
+	@Inject
+	private SecurityContext sessionContext;
 	
 	@AroundInvoke
 	public Object verifyAccess(InvocationContext context) throws Exception {

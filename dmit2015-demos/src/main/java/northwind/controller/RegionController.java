@@ -12,7 +12,7 @@ import javax.inject.Named;
 import org.omnifaces.util.Messages;
 
 import northwind.entity.Region;
-import northwind.service.NorthwindDatabaseService;
+import northwind.service.NorthwindService;
 
 @Named("currentRegionController")
 @ViewScoped
@@ -20,7 +20,7 @@ public class RegionController implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Inject
-	private NorthwindDatabaseService northwindService;
+	private NorthwindService northwindService;
 	
 	// The Region to create or edit or delete
 	private Region regionDetail;		// +getter +setter

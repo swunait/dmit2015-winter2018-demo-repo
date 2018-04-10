@@ -2,6 +2,9 @@ package northwind.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
@@ -15,6 +18,7 @@ import java.util.List;
  */
 @Entity
 @NamedQuery(name="Region.findAll", query="SELECT r FROM Region r")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Region implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -29,6 +33,7 @@ public class Region implements Serializable {
 
 	//bi-directional many-to-one association to Territory
 	@OneToMany(mappedBy="region")
+	@XmlTransient
 	private List<Territory> territories;
 
 	public Region() {

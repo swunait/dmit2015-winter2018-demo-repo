@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import northwind.report.CategorySales;
-import northwind.service.NorthwindDatabaseService;
+import northwind.service.NorthwindService;
 
 @Named
 @ViewScoped
@@ -17,7 +17,7 @@ public class CategorySalesReportController implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	private NorthwindDatabaseService northwindService;
+	private NorthwindService northwindService;
 	
 	private List<CategorySales> categorySales;
 	private Integer selectedYear;

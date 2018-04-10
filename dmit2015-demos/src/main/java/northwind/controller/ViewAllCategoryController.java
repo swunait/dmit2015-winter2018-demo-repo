@@ -8,14 +8,14 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import northwind.entity.Category;
-import northwind.service.NorthwindDatabaseService;
+import northwind.service.NorthwindService;
 
 @Named
 @ViewScoped
 public class ViewAllCategoryController implements Serializable {
 
 	@Inject
-	private NorthwindDatabaseService northwindDB;
+	private NorthwindService northwindDB;
 	
 	public List<Category> retrieveAllCategory() {
 		return northwindDB.findAllCategory();
