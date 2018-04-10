@@ -19,6 +19,7 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.jboss.resteasy.client.jaxrs.BasicAuthentication;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -55,7 +56,7 @@ public class NorthwindRESTServiceTest {
 
 		this.client = ClientBuilder.newBuilder().sslContext(sc).build();
 		
-//		this.client = this.client.register(new BasicAuthentication("admin01", "Password2015"));
+		this.client = this.client.register(new BasicAuthentication("admin01", "Password2015"));
 		
 //		this.client = ClientBuilder.newBuilder().sslContext(sc).build().register(new Authenticator("admin01", "Password2015"));
 		
