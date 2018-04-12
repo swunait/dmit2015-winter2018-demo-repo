@@ -67,6 +67,9 @@ function CategoryViewModel() {
 				self.description("");
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
+				console.log(jqXHR);
+				console.log(textStatus);
+				console.log(errorThrown);
 				alert('Error creating new category');
 			}
 		});

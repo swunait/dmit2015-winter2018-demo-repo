@@ -8,3 +8,5 @@ curl -k -XPUT -HContent-type:application/json --data '{"categoryID":9,"categoryN
 
 curl -k -XDELETE https://localhost:8443/dmit2015-demos/rest/webapi/categories/9
 
+curl -k -XPOST -HContent-type:application/json --data '{"categoryName":"Seafood","description": "description 9"}' https://localhost:8443/dmit2015-demos/rest/webapi/categories
+ 

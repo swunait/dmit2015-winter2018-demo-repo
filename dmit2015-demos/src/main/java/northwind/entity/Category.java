@@ -6,6 +6,9 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlTransient;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+
 import java.util.List;
 
 
@@ -25,7 +28,9 @@ public class Category implements Serializable {
 	@Column(name="CategoryID")
 	private int categoryID;
 
-	@Column(name="CategoryName")
+	@NotBlank(message="Category Name field value is required")
+	@Length(min=2, max=15, message="Category Name field value must be 2 to 15 characters.")
+	@Column(name="CategoryName", unique=true)
 	private String categoryName;
 
 	@Lob

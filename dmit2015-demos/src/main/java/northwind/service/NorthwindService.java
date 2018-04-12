@@ -49,6 +49,18 @@ public class NorthwindService {
 		return entityManager.find(Category.class, categoryId);	
 	}
 	
+	public Category findOneCategoryByCategoryName(String categoryName) {
+		Category querySingleResult = null;
+		try {
+			querySingleResult =  (Category) entityManager.createQuery("SELECT c FROM Category c WHERE c.categoryName = :categoryNameValue")
+					.setParameter("categoryNameValue", categoryName)
+					.getSingleResult();
+		} catch(NoResultException e) {
+			querySingleResult = null;
+		}
+		return querySingleResult;
+	}
+	
 	public List<Category> findAllCategory() {
 		return entityManager.createQuery(
 				"SELECT c FROM Category c ORDER BY c.categoryName", Category.class
