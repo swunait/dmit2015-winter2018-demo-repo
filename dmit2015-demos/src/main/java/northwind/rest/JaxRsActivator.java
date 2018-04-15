@@ -16,8 +16,14 @@
  */
 package northwind.rest;
 
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
+
+import org.jboss.resteasy.plugins.interceptors.CorsFilter;
 
 /**
  * A class extending {@link Application} and annotated with @ApplicationPath is the Java EE 7 "no XML" approach to activating
@@ -30,4 +36,25 @@ import javax.ws.rs.core.Application;
 @ApplicationPath("/rest")
 public class JaxRsActivator extends Application {
     /* class body intentionally left blank */
+	
+	Set<Object> singletons;
+
+    @Override
+    public Set<Class<?>> getClasses() {
+        HashSet<Class<?>> clazzes = new HashSet<>();
+        clazzes.add(NorthwindRESTService.class);
+        return clazzes;
+    }
+
+    @Override
+    public Set<Object> getSingletons() {
+        if (singletons == null) {
+            CorsFilter corsFilter = new CorsFilter();
+            corsFilter.getAllowedOrigins().add("*");
+
+            singletons = new LinkedHashSet<Object>();
+            singletons.add(corsFilter);
+        }
+        return singletons;
+    }
 }

@@ -79,8 +79,9 @@ function CategoryViewModel() {
 	self.description = ko.observable("");
 	self.picture = ko.observable("");
 	
-	var northwindAPI = "/dmit2015-demos/rest/webapi/categories/" + categoryIdParameterValue;
-	$.ajax(northwindAPI, {
+	var northwindAPI = "/dmit2015-demos/rest/northwind";
+	
+	$.ajax(northwindAPI + "/categories/" + categoryIdParameterValue, {
 		//data: ko.toJSON( categoryIdParameterValue ),
 		type: "GET",
 		contentType: "application/json",
@@ -101,10 +102,8 @@ function CategoryViewModel() {
 	
 	self.updateCategory = function() {
 		var self = this;
-		
-		var northwindAPI = "/dmit2015-demos/rest/webapi/categories";
-		
-		$.ajax(northwindAPI, {
+				
+		$.ajax(northwindAPI + "/categories", {
 			data: ko.toJSON( {categoryID: self.categoryId(), categoryName: self.categoryName(), description: self.description() } ),
 			type: "PUT",
 			contentType: "application/json",
@@ -121,8 +120,7 @@ function CategoryViewModel() {
 	self.deleteCategory = function() {
 		var result = confirm("Are you sure you want to delete this record?")
 		if (result == true ) {
-			var northwindAPI = "/dmit2015-demos/rest/webapi/categories/" + self.categoryId();
-			$.ajax(northwindAPI, {
+			$.ajax(northwindAPI + "/categories/" + self.categoryId(), {
 				//data: ko.toJSON( self.categoryId() ),
 				type: "DELETE",
 				contentType: "application/json",

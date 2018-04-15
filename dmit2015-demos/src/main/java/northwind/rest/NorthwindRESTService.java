@@ -28,7 +28,7 @@ import javax.ws.rs.core.Response;
 import northwind.entity.Category;
 import northwind.service.NorthwindService;
 
-@Path("webapi")
+@Path("northwind")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @RequestScoped
@@ -45,14 +45,36 @@ public class NorthwindRESTService {
 
 	@Path("categories")
 	@GET
-	public List<Category> findAllCategory() {
-		return northwindService.findAllCategory();
+	public Response findAllCategory() {
+		Response.ResponseBuilder builder = null;
+		try {
+			List<Category> categories = northwindService.findAllCategory();
+			// Create an "ok" response
+			builder = Response.ok(categories);
+		} catch (Exception e) {
+			// Handle generic exceptions
+			Map<String, String> responseObj = new HashMap<>();
+			responseObj.put("error", e.getMessage());
+			builder = Response.status(Response.Status.BAD_REQUEST).entity(responseObj);
+		}
+		return builder.build();
 	}
 
 	@Path("categories/{id}")
 	@GET
-	public Category findOneCategoryById(@PathParam("id") int categoryId) {
-		return northwindService.findOneCategory(categoryId);
+	public Response findOneCategoryById(@PathParam("id") int categoryId) {
+		Response.ResponseBuilder builder = null;
+		try {
+			Category existingCategory = northwindService.findOneCategory(categoryId);
+			// Create an "ok" response
+			builder = Response.ok(existingCategory);
+		} catch (Exception e) {
+			// Handle generic exceptions
+			Map<String, String> responseObj = new HashMap<>();
+			responseObj.put("error", e.getMessage());
+			builder = Response.status(Response.Status.BAD_REQUEST).entity(responseObj);
+		}
+		return builder.build();
 	}
 
 	@Path("categories")
@@ -64,8 +86,8 @@ public class NorthwindRESTService {
 			validateCategory(newCategory);
 
 			northwindService.addCategory(newCategory);
-			// Create an "ok" response
-			builder = Response.ok();
+			// Create an "ok" response and send the generated categoryId
+			builder = Response.ok(newCategory.getCategoryID());
 		} catch (ConstraintViolationException ce) {
 			// Handle bean validation issues
 			builder = createViolationResponse(ce.getConstraintViolations());

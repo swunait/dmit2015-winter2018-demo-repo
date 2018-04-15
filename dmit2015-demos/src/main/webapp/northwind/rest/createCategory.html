@@ -56,9 +56,10 @@ function CategoryViewModel() {
 	self.categoryName = ko.observable("");
 	self.description = ko.observable("");
 
+	var northwindAPI = "/dmit2015-demos/rest/northwind";		
+
 	self.createCategory = function() {
-		var northwindAPI = "/dmit2015-demos/rest/webapi/categories";		
-		$.ajax(northwindAPI, {
+		$.ajax(northwindAPI + "/categories", {
 			data: ko.toJSON( { categoryName: self.categoryName(), description: self.description() } ),
 			type: "POST",
 			contentType: "application/json",

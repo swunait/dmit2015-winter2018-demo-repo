@@ -58,12 +58,11 @@ function CategoriesViewModel() {
 	var self = this;
 	self.categories = ko.observableArray([]);
 
-	var northwindAPI = "/dmit2015-demos/rest/webapi/categories";
-	$.getJSON(northwindAPI, function(allData) {
-		console.log("entering getJSON");
+	var northwindAPI = "/dmit2015-demos/rest/northwind";
+	
+	$.getJSON(northwindAPI + "/categories", function(allData) {
 		var mappedCategories = $.map(allData, function(singleData) { return new Category(singleData); });
 		self.categories(mappedCategories);
-		console.log("exiting getJSON");
 	});
 	
 	self.editCategory = function(category) {
