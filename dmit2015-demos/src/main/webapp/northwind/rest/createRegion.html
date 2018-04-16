@@ -12,12 +12,12 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 			  
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js"></script>
-<title>Northwind - Create New Category</title>
+<title>Northwind - Create New Region</title>
 </head>
 <body>
 
 <div class="container">
-	<h2>Create New Category</h2>
+	<h2>Create New Region</h2>
 	
 	<ul id="errors" class="bg-danger" data-bind="foreach: errors">
    		<li><span data-bind="text: $data"></span></li>
@@ -25,19 +25,15 @@
     
 	<div id="editor" class="section panel panel-primary">
         <div class="panel-heading">
-            Edit Category
+            Edit Region
         </div>
 
         <div class="panel-body">
             <div class="form-group">
-                <label>Category Name</label>
-                <input class="form-control" data-bind="value: categoryName" />
+                <label>Region Description</label>
+                <input class="form-control" data-bind="value: regionDescription" />
             </div>
-            <div class="form-group">
-                <label>Description</label>
-               <input class="form-control" data-bind="value: description" />
-            </div>
-            <button class="btn btn-primary" data-bind="click: createCategory">Save</button>
+            <button class="btn btn-primary" data-bind="click: createRegion">Save</button>
             <button class="btn btn-default" onclick="handleCancelClick()" >Cancel</button>
       </div>
     </div>
@@ -45,33 +41,30 @@
 
 <script>
 function handleCancelClick() {
-	window.location.href = "viewCategories.html";
+	window.location.href = "viewRegions.html";
 }
 
-function Category(data) {
+function Region(data) {
 	var self = this;
-	self.categoryId = ko.observable(data.categoryID);
-	self.categoryName = data.categoryName;
-	self.description = data.description;
+	self.regionId = ko.observable(data.regionID);
+	self.regionDescription = data.regionDescription;
 }
 
-function CategoryViewModel() {
+function RegionViewModel() {
 	var self = this;
-	self.categoryName = ko.observable("");
-	self.description = ko.observable("");
+	self.regionDescription = ko.observable("");
 	
 	self.errors = ko.observableArray([]);
 	
 	var northwindAPI = "/dmit2015-demos/rest/northwind";		
 
-	self.createCategory = function() {
-		$.ajax(northwindAPI + "/categories", {
-			data: ko.toJSON( { categoryName: self.categoryName(), description: self.description() } ),
+	self.createRegion = function() {
+		$.ajax(northwindAPI + "/regions", {
+			data: ko.toJSON( { regionDescription: self.regionDescription() } ),
 			type: "POST",
 			contentType: "application/json",
 			success: function(result) { 
-				self.categoryName("");
-				self.description("");
+				window.location.href = "viewRegions.html";
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
 				console.log(jqXHR);
@@ -83,39 +76,20 @@ function CategoryViewModel() {
 	                	console.log('name: ' + name);
 	                	console.log('value: ' + value);
 	                	self.errors.removeAll();
-	                	self.errors.push(name + ":" + value);
-	                	alert(name + ":" + value);
+	                	self.errors.push(value);
+	                	alert(value);
 	                });
-					//var theerror = ko.mapping.fromJSON(jqXHR.responseJSON);
-					//alert(theerror);
-					//alert('Bad request' + jqXHR.responseText);					
 				} else {
-					alert('Error creating new category');
+					alert('error ' + errorThrown);
 					
 				}
-			},/*
-			statusCode: {
-				400: function(data) {
-					console.log(data.responseText);
-					console.log(data.responseJSON);
-					self.errors.removeAll();
-					self.errors.push( data.responseJSON );
-					//alert('error code 400' + data.responseJSON.categoryName);
-				},
-				409: function(data) {
-					console.log(data.responseText);
-					console.log(data.responseJSON);
-					self.errors.removeAll();
-					self.errors.push( data.responseJSON );
-					//alert('error 409')
-				}
-			}*/
+			}
 		});
 	}
 	
 }
 
-ko.applyBindings(new CategoryViewModel());
+ko.applyBindings(new RegionViewModel());
 </script>
 
 </body>

@@ -1,0 +1,9 @@
+curl -k -XGET https://localhost:8443/dmit2015-demos/rest/northwind/territories
+
+curl -k -XGET https://localhost:8443/dmit2015-demos/rest/northwind/territories/98104
+
+curl -k -XPOST -HContent-type:application/json --data '{"territoryID":"CURL01","territoryDescription":"CURL command territory","region":{"regionID":2,"regionDescription":"Western"}}' https://localhost:8443/dmit2015-demos/rest/northwind/territories
+
+curl -k -XPUT -HContent-type:application/json --data '{"territoryID":"CURL01","territoryDescription":"updated CURL command territory","region":{"regionID":3,"regionDescription":"Northern"}}' https://localhost:8443/dmit2015-demos/rest/northwind/territories
+ 
+curl -k -XDELETE https://localhost:8443/dmit2015-demos/rest/northwind/territories/CURL01

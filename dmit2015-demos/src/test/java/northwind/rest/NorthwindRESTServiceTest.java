@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
+import java.util.Map;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
@@ -105,4 +106,48 @@ public class NorthwindRESTServiceTest {
 		
 	}
 
+
+	@Test
+	public void testDuplicateCategoryName() {
+		Category newCategory = new Category();
+		newCategory.setCategoryName("Seafood");
+		newCategory.setDescription("This category name is a duplicate");
+		
+		WebTarget resource = client.target(BASE_URI).path("categories");
+		
+		// call the web service method to create a new category entity
+		Response response = resource.request(MediaType.APPLICATION_JSON).post( Entity.entity(newCategory, MediaType.APPLICATION_JSON) );
+		assertEquals("Unexpected response status", 409, response.getStatus());
+		Map<String, String> errorMap = response.readEntity(Map.class);
+		assertNotNull("response.readEntity() should not null", errorMap);
+		assertEquals("Unexpected response.readEntity(). It contains" + errorMap, 1, errorMap.size());
+		errorMap.forEach(
+			(errorName, errorMessage) -> System.out.println(errorName + ": " + errorMessage + " ")
+		);
+		
+		// Read the categoryId value included in the response
+		response.close();
+	}
+	
+	@Test
+	public void testInvalidCategoryName() {
+		Category newCategory = new Category();
+		newCategory.setCategoryName("");
+		newCategory.setDescription("This category name is invalid");
+		
+		WebTarget resource = client.target(BASE_URI).path("categories");
+		
+		// call the web service method to create a new category entity
+		Response response = resource.request(MediaType.APPLICATION_JSON).post( Entity.entity(newCategory, MediaType.APPLICATION_JSON) );
+		assertEquals("Unexpected response status", 400, response.getStatus());
+		Map<String, String> errorMap =  response.readEntity(Map.class);
+		assertNotNull("response.readEntity() should not null", errorMap);
+		assertEquals("Unexpected response.readEntity(). It contains" + errorMap, 1, errorMap.size());
+		errorMap.forEach(
+				(errorName, errorMessage) -> System.out.println(errorName + ": " + errorMessage + " ")
+			);
+		
+		// Read the categoryId value included in the response
+		response.close();
+	}
 }

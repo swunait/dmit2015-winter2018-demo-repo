@@ -13,64 +13,59 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	  
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js"></script>
-<title>Northwind - Categories</title>
+
+<title>Northwind - Regions</title>
 </head>
 <body>
 
 <div class="container">
-	<h2>Northwind Categories</h2>
+	<h2>Northwind Regions</h2>
 	
-	<a href="createCategory.html" class="btn btn-primary">Create Category</a>
+	<a href="createRegion.html" class="btn btn-primary">Create Region</a>
 	
-	<table id="categoriesTable" class="table table-bordered table-striped">
+	<table id="regionsTable" class="table table-bordered table-striped">
 		<thead>
 			<tr>
-				<th>CategoryID</th>
-				<th>Category Name</th>
-				<th>Description</th>	
-				<th>Picture</th>
+				<th>RegionID</th>
+				<th>Region Description</th>
 				<th>Action</th>
 			</tr>	
 		</thead>
-		<tbody data-bind="foreach: categories">
+		<tbody data-bind="foreach: regions">
 			<tr>
-				<td data-bind="text: categoryId"></td>
-				<td data-bind="text: categoryName"></td>
-				<td data-bind="text: description"></td>
-				<td><img width="64px" height="64px" data-bind="attr:{src: 'data:image/png;base64,' + picture}" />  </td>
-				<td><a href="#" class="btn" data-bind="click: $parent.editCategory"><span class="glyphicon glyphicon-edit"></span>  edit</a></td>
+				<td data-bind="text: regionId"></td>
+				<td data-bind="text: regionDescription"></td>
+				<td><a href="#" class="btn" data-bind="click: $parent.editRegion"><span class="glyphicon glyphicon-edit"></span>  edit</a></td>
 			</tr>	
 		</tbody>
 	</table>	
 </div>
 
 <script>
-function Category(data) {
+function Region(data) {
 	var self = this;
-	self.categoryId = ko.observable(data.categoryID);
-	self.categoryName = data.categoryName;
-	self.description = data.description;
-	self.picture = data.picture;
+	self.regionId = ko.observable(data.regionID);
+	self.regionDescription = data.regionDescription;
 }
 
-function CategoriesViewModel() {
+function RegionsViewModel() {
 	var self = this;
-	self.categories = ko.observableArray([]);
+	self.regions = ko.observableArray([]);
 
 	var northwindAPI = "/dmit2015-demos/rest/northwind";
 	
-	$.getJSON(northwindAPI + "/categories", function(allData) {
-		var mappedCategories = $.map(allData, function(singleData) { return new Category(singleData); });
-		self.categories(mappedCategories);
+	$.getJSON(northwindAPI + "/regions", function(allData) {
+		var mappedRegions = $.map(allData, function(singleData) { return new Region(singleData); });
+		self.regions(mappedRegions);
 	});
 	
-	self.editCategory = function(category) {
-		var url = "editCategory.html?categoryId=" + category.categoryId();
+	self.editRegion = function(region) {
+		var url = "editRegion.html?regionId=" + region.regionId();
 		window.location.replace(url);
 	};
 }
 
-ko.applyBindings(new CategoriesViewModel());
+ko.applyBindings(new RegionsViewModel());
 </script>
 
 </body>

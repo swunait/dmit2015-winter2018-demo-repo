@@ -1,0 +1,9 @@
+curl -k -XGET https://localhost:8443/dmit2015-demos/rest/northwind/regions
+
+curl -k -XGET https://localhost:8443/dmit2015-demos/rest/northwind/regions/3
+
+curl -k -XPOST -HContent-type:application/json --data '{"regionDescription":"CURL command region"}' https://localhost:8443/dmit2015-demos/rest/northwind/regions
+ 
+curl -k -XPUT -HContent-type:application/json --data '{"regionID":9,"regionDescription":"updated CURL command region"}' https://localhost:8443/dmit2015-demos/rest/northwind/regions 
+
+curl -k -XDELETE https://localhost:8443/dmit2015-demos/rest/northwind/regions/9

@@ -26,6 +26,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import northwind.entity.Category;
+import northwind.entity.Region;
+import northwind.entity.Territory;
 import northwind.service.NorthwindService;
 
 @Path("northwind")
@@ -42,6 +44,170 @@ public class NorthwindRESTService {
 
 	@Inject
 	private NorthwindService northwindService;
+	
+	@Path("regions")
+	@GET
+	public Response findAllRegion() {
+		Response.ResponseBuilder builder = null;
+		try {
+			List<Region> regions = northwindService.findAllRegion();
+			builder = Response.ok().entity(regions);
+		} catch (Exception e) {
+			// Handle generic exceptions
+			Map<String, String> responseObj = new HashMap<>();
+			responseObj.put("error", e.getMessage());
+			builder = Response.status(Response.Status.BAD_REQUEST).entity(responseObj);
+		}
+		return builder.build();
+	}
+
+	@Path("regions/{id}")
+	@GET
+	public Response findOneRegionById(@PathParam("id") int regionId) {
+		Response.ResponseBuilder builder = null;
+		try {
+			Region existingRegion = northwindService.findOneRegion(regionId);
+			builder = Response.ok().entity(existingRegion);
+		} catch (Exception e) {
+			// Handle generic exceptions
+			Map<String, String> responseObj = new HashMap<>();
+			responseObj.put("error", e.getMessage());
+			builder = Response.status(Response.Status.BAD_REQUEST).entity(responseObj);
+		}
+		return builder.build();
+	}
+
+	@Path("regions")
+	@POST
+	public Response createRegion(Region newRegion) {
+		Response.ResponseBuilder builder = null;
+		try {
+			northwindService.addRegion(newRegion);
+			// Send the generated regionId value to the response
+			builder = Response.ok().entity(newRegion.getRegionID());
+		} catch (Exception e) {
+			// Handle generic exceptions
+			Map<String, String> responseObj = new HashMap<>();
+			responseObj.put("error", e.getMessage());
+			builder = Response.status(Response.Status.BAD_REQUEST).entity(responseObj);
+		}
+		return builder.build();
+	}
+
+	@Path("regions")
+	@PUT
+	public Response updateRegion(Region existingRegion) {
+		Response.ResponseBuilder builder = null;
+		try {
+			northwindService.updateRegion(existingRegion);
+			builder = Response.ok();
+		} catch (Exception e) {
+			// Handle generic exceptions
+			Map<String, String> responseObj = new HashMap<>();
+			responseObj.put("error", e.getMessage());
+			builder = Response.status(Response.Status.BAD_REQUEST).entity(responseObj);
+		}
+		return builder.build();
+	}
+
+	@Path("regions/{id}")
+	@DELETE
+	public Response deleteRegion(@PathParam("id") int regionId) {
+		Response.ResponseBuilder builder = null;
+		try {
+			northwindService.deleteRegionById(regionId);
+			builder = Response.ok();
+		} catch (Exception e) {
+			// Handle generic exceptions
+			Map<String, String> responseObj = new HashMap<>();
+			responseObj.put("error", e.getMessage());
+			builder = Response.status(Response.Status.BAD_REQUEST).entity(responseObj);
+		}
+		return builder.build();
+	}
+	
+	
+	@Path("territories")
+	@GET
+	public Response findAllTerritory() {
+		Response.ResponseBuilder builder = null;
+		try {
+			List<Territory> territories = northwindService.findAllTerritory();
+			builder = Response.ok().entity(territories);
+		} catch (Exception e) {
+			// Handle generic exceptions
+			Map<String, String> responseObj = new HashMap<>();
+			responseObj.put("error", e.getMessage());
+			builder = Response.status(Response.Status.BAD_REQUEST).entity(responseObj);
+		}
+		return builder.build();
+	}
+
+	@Path("territories/{id}")
+	@GET
+	public Response findOneTerritoryById(@PathParam("id") String territoryId) {
+		Response.ResponseBuilder builder = null;
+		try {
+			Territory existingTerritory = northwindService.findOneTerritory(territoryId);
+			builder = Response.ok().entity(existingTerritory);
+		} catch (Exception e) {
+			// Handle generic exceptions
+			Map<String, String> responseObj = new HashMap<>();
+			responseObj.put("error", e.getMessage());
+			builder = Response.status(Response.Status.BAD_REQUEST).entity(responseObj);
+		}
+		return builder.build();
+	}
+
+	@Path("territories")
+	@POST
+	public Response createTerritory(Territory newTerritory) {
+		Response.ResponseBuilder builder = null;
+		try {
+			northwindService.addTerritory(newTerritory);
+			builder = Response.ok();
+		} catch (Exception e) {
+			// Handle generic exceptions
+			Map<String, String> responseObj = new HashMap<>();
+			responseObj.put("error", e.getMessage());
+			builder = Response.status(Response.Status.BAD_REQUEST).entity(responseObj);
+		}
+		return builder.build();
+	}
+
+	@Path("territories")
+	@PUT
+	public Response updateTerritory(Territory existingTerritory) {
+		Response.ResponseBuilder builder = null;
+		try {
+			northwindService.updateTerritory(existingTerritory);
+			builder = Response.ok();
+		} catch (Exception e) {
+			// Handle generic exceptions
+			Map<String, String> responseObj = new HashMap<>();
+			responseObj.put("error", e.getMessage());
+			builder = Response.status(Response.Status.BAD_REQUEST).entity(responseObj);
+		}
+		return builder.build();
+	}
+
+	@Path("territories/{id}")
+	@DELETE
+	public Response deleteTerritory(@PathParam("id") String territoryId) {
+		Response.ResponseBuilder builder = null;
+		try {
+			northwindService.deleteTerritoryById(territoryId);
+			builder = Response.ok();
+		} catch (Exception e) {
+			// Handle generic exceptions
+			Map<String, String> responseObj = new HashMap<>();
+			responseObj.put("error", e.getMessage());
+			builder = Response.status(Response.Status.BAD_REQUEST).entity(responseObj);
+		}
+		return builder.build();
+	}
+	
+	
 
 	@Path("categories")
 	@GET
@@ -141,7 +307,7 @@ public class NorthwindRESTService {
 
 	/**
 	 * <p>
-	 * Validates the given Member variable and throws validation exceptions based on
+	 * Validates the given Category variable and throws validation exceptions based on
 	 * the type of error. If the error is standard bean validation errors then it
 	 * will throw a ConstraintValidationException with the set of the constraints
 	 * violated.
@@ -152,12 +318,12 @@ public class NorthwindRESTService {
 	 * interpreted separately.
 	 * </p>
 	 * 
-	 * @param member
-	 *            Member to be validated
+	 * @param currentCategory
+	 *            Category to be validated
 	 * @throws ConstraintViolationException
 	 *             If Bean Validation errors exist
 	 * @throws ValidationException
-	 *             If member with the same email already exists
+	 *             If currentCategory with the same categoryName already exists
 	 */
 	private void validateCategory(Category currentCategory) throws ConstraintViolationException, ValidationException {
 		// Create a bean validator and check for issues.
@@ -167,7 +333,7 @@ public class NorthwindRESTService {
 			throw new ConstraintViolationException(new HashSet<ConstraintViolation<?>>(violations));
 		}
 
-		// Check the uniqueness of the email address
+		// Check the uniqueness of the categoryName
 		if (categoryNameAlreadyExists(currentCategory.getCategoryName())) {
 			throw new ValidationException("Unique CategoryName Violation");
 		}

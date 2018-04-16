@@ -87,6 +87,12 @@ public class NorthwindService {
 		entityManager.remove( existingRegion );
 	}
 	
+	public void deleteRegionById(int regionId) throws Exception {
+		Region existingRegion = findOneRegion(regionId);
+		deleteRegion(existingRegion);
+	}
+	
+	
 	public Region findOneRegion(int RegionId) {
 		return entityManager.find(Region.class, RegionId);	
 	}
@@ -110,8 +116,13 @@ public class NorthwindService {
 		entityManager.remove( existingTerritory );
 	}
 	
-	public Territory findOneTerritory(String TerritoryId) {
-		return entityManager.find(Territory.class, TerritoryId);	
+	public void deleteTerritoryById(String territoryId) {
+		Territory existingTerritory = findOneTerritory(territoryId);
+		deleteTerritory(existingTerritory);
+	}
+	
+	public Territory findOneTerritory(String territoryId) {
+		return entityManager.find(Territory.class, territoryId);	
 	}
 	
 	public List<Territory> findAllTerritory() {
